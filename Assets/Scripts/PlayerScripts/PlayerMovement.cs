@@ -15,7 +15,6 @@ public class PlayerMovement : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -25,5 +24,8 @@ public class PlayerMovement : MonoBehaviour
     {
         body.linearVelocity = new Vector2(Input.GetAxis("Horizontal") * speed, body.linearVelocity.y);
 
+        if(Input.GetKey(KeyCode.Space)){
+            body.linearVelocity = new Vector2(body.linearVelocity.x, speed);
+        }
     }
 }
