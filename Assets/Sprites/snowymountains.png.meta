@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 587e03201bb6ccb40af94c32c3270547
+guid: f9eb43b187dc1c7479fcccc6e3b45f24
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8333481726314500824
-    second: rifle_0
+      213: 9061005334412368188
+    second: snowymountains_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: rifle_0
+      name: snowymountains_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 200
-        height: 200
+        width: 1921
+        height: 1080
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8d25f273a7976a370800000000000000
-      internalID: 8333481726314500824
+      spriteID: c39919928582fbd70800000000000000
+      internalID: 9061005334412368188
       vertices: []
       indices: 
       edges: []
@@ -160,8 +160,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      rifle_0: 8333481726314500824
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -3,7 +3,6 @@ using UnityEngine;
 public class GunPickup : MonoBehaviour
 {
     public GameObject gunPrefab;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         if(gunPrefab == null)
@@ -12,7 +11,6 @@ public class GunPickup : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         
