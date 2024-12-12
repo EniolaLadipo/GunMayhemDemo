@@ -1,9 +1,8 @@
-using System.Data;
 using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
-
+    public Transform muzzlePoint;
     public int magazineCount;
     public int knockbackForce;
     public int range;
@@ -20,9 +19,9 @@ public class Gun : MonoBehaviour
 
     }
 
-    public virtual void Shoot()
+    public virtual void Shoot(Vector2 direction)
     {
-        Debug.Log("Shots fired!");
+
     }
     
 }
