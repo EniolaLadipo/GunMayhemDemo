@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 914118928a5d7fb46a185d60ccbad444, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentGun: {fileID: 666945312581949944}
+  gunPrefab: {fileID: 0}
 --- !u!114 &2769201882465410739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,9 +161,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a48b3b3d6148de48ba42bc1e0a4ace3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  muzzlePoint: {fileID: 0}
   magazineCount: 0
   knockbackForce: 0
   range: 0
   bulletSpeed: 0
   gunName: Pistol
   fireRate: 0
+  bulletPrefab: {fileID: 0}
