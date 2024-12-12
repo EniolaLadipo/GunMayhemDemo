@@ -1,10 +1,11 @@
 using UnityEngine;
-
 public class PlayerInventory : MonoBehaviour
 {
     public int gunCount = 0;
     public Transform gunHolder; // Reference to the GunHolder object
     private GameObject currentGun; // The currently equipped gun
+
+    public float lastTimeShot = 0f;
     void Start()
     {
         
@@ -13,6 +14,11 @@ public class PlayerInventory : MonoBehaviour
     void Update()
     {
         FlipGun();
+
+        if(Input.GetKey(KeyCode.E))
+        {
+            FireWeapon();
+        }
     }
     
     public void equipGun(GameObject gunPrefab)
@@ -23,6 +29,7 @@ public class PlayerInventory : MonoBehaviour
             Destroy(currentGun);
         }
 
+        gunCount++;
         // Instantiate the new gun and parent it to the GunHolder
         currentGun = Instantiate(gunPrefab, gunHolder.position, gunHolder.rotation);
         currentGun.transform.SetParent(gunHolder, true); // Make it a child of GunHolder
@@ -40,6 +47,27 @@ public class PlayerInventory : MonoBehaviour
             else
             {
                 currentGun.transform.localRotation = Quaternion.Euler(0, 180, 0); // Facing left
+            }
+        }
+    }
+
+    void FireWeapon()
+    {
+        if(currentGun != null)
+        {
+            Gun equippedGun = currentGun.GetComponent<Gun>();
+
+            if(equippedGun != null) 
+            {
+                float currentTime = Time.time;
+
+                if(currentTime - lastTimeShot >= equippedGun.fireRate)
+                {
+                    Vector2 direction = (transform.localScale.x > 0) ? Vector2.right : Vector2.left;  // Player facing right or left
+                    equippedGun.Shoot(direction);
+
+                    lastTimeShot = currentTime;
+                }
             }
         }
     }
