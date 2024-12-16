@@ -8,9 +8,9 @@ public class Pistol : Gun
     {
         gunName = "Pistol";
         magazineCount = 16;
-        knockbackForce = 10;
+        knockbackForce = 2;
         range = 25;
-        bulletSpeed = 2;
+        bulletSpeed = 20;
         fireRate = 0.3f;
     }
 
@@ -23,12 +23,19 @@ public class Pistol : Gun
     {
         if(bulletPrefab != null && muzzlePoint != null)
         {
+            Debug.Log("Gun was shot");
             GameObject movingBullet = Instantiate(bulletPrefab, muzzlePoint.position, muzzlePoint.rotation);
             movingBullet.SetActive(true);
 
+
+            Bullet bulletScript = movingBullet.GetComponent<Bullet>();
+            if (bulletScript != null)
+            {
+                bulletScript.setBulletVelocity(direction, bulletSpeed, knockbackForce);
+            }
+
             Rigidbody2D rb = movingBullet.GetComponent<Rigidbody2D>();
             rb.gravityScale = 0;
-            rb.AddForce(direction.normalized * bulletSpeed, ForceMode2D.Impulse);
         }
     }
 }

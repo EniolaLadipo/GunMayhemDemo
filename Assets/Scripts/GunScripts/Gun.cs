@@ -9,6 +9,7 @@ public class Gun : MonoBehaviour
     public int bulletSpeed;
     public string gunName;
     public float fireRate;
+    
     void Start()
     {
         
