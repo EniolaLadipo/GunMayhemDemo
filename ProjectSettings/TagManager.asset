@@ -8,6 +8,7 @@ TagManager:
   - Ammo
   - Platform
   - Bullet
+  - powerup
   layers:
   - Default
   - TransparentFX

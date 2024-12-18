@@ -14,38 +14,46 @@ public class PlayerMovement : MonoBehaviour
 
     public float defaultGravity;
     private float horizontalInput;
-    private bool isFacingRight = false;
+    private bool isFacingRight = true; // Default to facing right
 
-    void Start()
-    {
-        
-    }
+    private PlayerInventory inventory; // Reference to the PlayerInventory script
+
+    private float recoilForce = 2f; // Amount of recoil applied when shooting
 
     void Awake()
     {
         body = GetComponent<Rigidbody2D>();
         body.freezeRotation = true;
         defaultGravity = body.gravityScale;
+
+        inventory = GetComponent<PlayerInventory>(); // Link to the inventory script
     }
 
     void Update()
     {
         horizontalInput = Input.GetAxis("Horizontal");
 
+        // Check if the player is grounded
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
-        if(Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            Jump();
+            if (isGrounded)
+            {
+                Jump(); // Normal jump
+            }
+            else if (inventory.canDoubleJump) // Double jump if power-up is active
+            {
+                Jump();
+                inventory.canDoubleJump = false; // Disable double jump after use
+            }
         }
 
-
-        // Flip the player and gun depending on movement direction
-        if (horizontalInput > 0 && isFacingRight)
+        if (horizontalInput > 0 && !isFacingRight)
         {
             Flip();
         }
-        else if (horizontalInput < 0 && !isFacingRight)
+        else if (horizontalInput < 0 && isFacingRight)
         {
             Flip();
         }
@@ -54,55 +62,48 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         Move(horizontalInput);
-
         ApplyGravity();
-
     }
 
     void Move(float moveInput)
     {
-        body.linearVelocity = new Vector2(moveInput * speed, body.linearVelocity.y);
+        float movementSpeed = inventory != null ? inventory.speed : speed;
+        body.velocity = new Vector2(moveInput * movementSpeed, body.velocity.y);
     }
 
     void Jump()
     {
-        body.linearVelocity = new Vector2(body.linearVelocity.x, jumpForce);
+        body.velocity = new Vector2(body.velocity.x, inventory != null ? inventory.jumpForce : jumpForce);
     }
 
     void ApplyGravity()
     {
-        if(body.linearVelocity.y > 0)
+        if (body.velocity.y > 0)
         {
             body.gravityScale = defaultGravity * gravityForce;
         }
         else
         {
             body.gravityScale = defaultGravity;
-        }   
+        }
     }
 
     void Flip()
     {
         isFacingRight = !isFacingRight;
-        // Flip the player by changing its scale
         Vector3 playerScale = transform.localScale;
-        playerScale.x *= -1;  // Invert the X scale to flip the player
+        playerScale.x *= -1;
         transform.localScale = playerScale;
 
-        // Flip the gunholder along with the player (since the gunholder is a child of the player)
         Vector3 gunScale = gunHolder.localScale;
-        gunScale.x *= -1;  // Invert the X scale to flip the gunholder
+        gunScale.x *= -1;
         gunHolder.localScale = gunScale;
-
     }
 
-    private void OnDrawGizmos()
+    // Apply recoil effect to the player movement
+    public void ApplyRecoil(Vector2 recoilDirection)
     {
-        // Visualize the ground check in the editor
-        Gizmos.color = Color.red;
-        if (groundCheck != null)
-        {
-            Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
-        }
+        // Apply recoil force to the player's movement to push them back
+        body.velocity = new Vector2(recoilDirection.x * recoilForce, body.velocity.y);
     }
 }
