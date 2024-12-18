@@ -1,17 +1,17 @@
 using UnityEngine;
 
-public class Pistol : Gun
+public class Rifle : Gun
 {
     public GameObject bulletPrefab;
 
     void Start()
     {
-        gunName = "Pistol";
-        magazineCount = 16;
-        knockbackForce = 2.0f;
+        gunName = "Rifle";
+        magazineCount = 30;
+        knockbackForce = 0.8f;
         range = 25;
         bulletSpeed = 20;
-        fireRate = 0.3f;
+        fireRate = 0.15f;
     }
 
     void Update()
@@ -40,7 +40,7 @@ public class Pistol : Gun
                 bulletScript.setBulletVelocity(direction, bulletSpeed, knockbackForce);
             }
 
-            magazineCount--;
+            magazineCount--; 
             Rigidbody2D rb = movingBullet.GetComponent<Rigidbody2D>();
             rb.gravityScale = 0;
         }

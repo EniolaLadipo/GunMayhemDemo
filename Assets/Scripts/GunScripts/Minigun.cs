@@ -1,17 +1,17 @@
 using UnityEngine;
 
-public class Pistol : Gun
+public class Minigun : Gun
 {
     public GameObject bulletPrefab;
 
     void Start()
     {
         gunName = "Pistol";
-        magazineCount = 16;
-        knockbackForce = 2.0f;
+        magazineCount = 75;
+        knockbackForce = 0.5f;
         range = 25;
         bulletSpeed = 20;
-        fireRate = 0.3f;
+        fireRate = 0.075f;
     }
 
     void Update()
