@@ -2,20 +2,19 @@ using UnityEngine;
 
 public class ShotgunShell : MonoBehaviour
 {
-    public float maxLifetime = 1.5f;    // Maximum time bullet exists
-    public float maxRange = 5f;     // Maximum range the bullet can travel
-    public float knockback;          // Knockback force applied to enemies
-    public float speed;              // Bullet speed
-    public Vector2 direction;        // Direction the bullet travels
+    public float maxLifetime = 1.5f;
+    public float maxRange = 5f;
+    public float knockback;
+    public float speed;
+    public Vector2 direction;
 
-    private Vector2 startPosition;   // Initial position of the bullet
+    private Vector2 startPosition;
 
     void Start()
     {
         // Store the starting position when the bullet is instantiated
         startPosition = transform.position;
 
-        // Destroy the bullet after maxLifetime as a fallback
         Destroy(gameObject, maxLifetime);
     }
 
@@ -45,7 +44,6 @@ public class ShotgunShell : MonoBehaviour
 
     void OnBecameInvisible()
     {
-        // Destroy the bullet if it goes off-screen
         Destroy(gameObject);
     }
 
@@ -54,7 +52,7 @@ public class ShotgunShell : MonoBehaviour
         this.direction = direction;
         this.speed = speed;
         this.knockback = knockback;
-        this.maxRange = maxRange; // Pass the range dynamically for different weapons
+        this.maxRange = maxRange;
     }
 
     void OnTriggerEnter2D(Collider2D other)

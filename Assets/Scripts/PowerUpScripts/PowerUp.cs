@@ -2,13 +2,21 @@ using UnityEngine;
 
 public class PowerUp : MonoBehaviour 
 {
-    void Start()
+    public enum PowerUpType { Speed, Jetpack, DoubleJump }
+    public PowerUpType powerUpType;
+
+    private void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.CompareTag("Player"))
+        {
+            PlayerInventory playerInventory = other.GetComponent<PlayerInventory>();
 
-    }
+            if (playerInventory != null)
+            {
+                playerInventory.ActivatePowerUp(this);
 
-    void Update()
-    {
-
+                Destroy(gameObject);
+            }
+        }
     }
 }

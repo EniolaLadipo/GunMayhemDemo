@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: 7a50a74840497864aa11069c3fe70771
+guid: 055e1a8e0cc43264ebe567c12650b4f9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7209445479881773086
-    second: Jetpack2_0
+      213: -116059596369708853
+    second: DoubleJump_0
+  - first:
+      213: -5366337987226420094
+    second: DoubleJump_1
+  - first:
+      213: -6209177734692245536
+    second: DoubleJump_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -165,13 +171,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Jetpack2_0
+      name: DoubleJump_0
       rect:
         serializedVersion: 2
-        x: 54
-        y: 42
-        width: 238
-        height: 290
+        x: 120
+        y: 331
+        width: 272
+        height: 181
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -180,8 +186,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2efe9188887e2fb90800000000000000
-      internalID: -7209445479881773086
+      spriteID: bc8bb99796ca36ef0800000000000000
+      internalID: -116059596369708853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DoubleJump_1
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 231
+        width: 272
+        height: 183
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28c3fae5800f685b0800000000000000
+      internalID: -5366337987226420094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DoubleJump_2
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 0
+        width: 272
+        height: 316
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ef67687fb194d9a0800000000000000
+      internalID: -6209177734692245536
       vertices: []
       indices: 
       edges: []
@@ -200,7 +250,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Jetpack2_0: -7209445479881773086
+      DoubleJump_0: -116059596369708853
+      DoubleJump_1: -5366337987226420094
+      DoubleJump_2: -6209177734692245536
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

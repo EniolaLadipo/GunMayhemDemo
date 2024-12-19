@@ -8,17 +8,16 @@ public class Shotgun : Gun
     {
         gunName = "Shotgun";
         magazineCount = 8;
-        knockbackForce = 1.0f;
+        knockbackForce = 3.0f;
         range = 10; // Shorter range for shotgun
         bulletSpeed = 15;
-        fireRate = 0.5f;
+        fireRate = 1f;
     }
 
     public override void Shoot(Vector2 direction)
     {
         if (magazineCount <= 0)
         {
-            Debug.Log("No ammo! Reload required.");
             return;
         }
 
@@ -29,7 +28,7 @@ public class Shotgun : Gun
             // Create multiple bullets for a shotgun spread
             for (int i = -2; i <= 2; i++) // Creates 5 bullets in a cone pattern
             {
-                float spreadAngle = i * 10f; // Adjust spread here
+                float spreadAngle = i * 10f; // Spread arc
                 Vector2 spreadDirection = Quaternion.Euler(0, 0, spreadAngle) * direction;
 
                 GameObject movingBullet = Instantiate(bulletPrefab, muzzlePoint.position, muzzlePoint.rotation);

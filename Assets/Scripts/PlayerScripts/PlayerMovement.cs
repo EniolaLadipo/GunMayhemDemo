@@ -4,17 +4,19 @@ public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D body;
     public int jumpForce;
-    public int speed;
+    public float speed;
     public float gravityForce;
     private bool isGrounded;
-    public Transform groundCheck; // Empty GameObject for checking the ground
-    public float groundCheckRadius = 0.15f; // Size of the ground check
-    public LayerMask groundLayer; // Layer representing ground objects
+    public Transform groundCheck;
+    public float groundCheckRadius = 0.15f;
+    public LayerMask groundLayer;
     public Transform gunHolder;
 
     public float defaultGravity;
     private float horizontalInput;
     private bool isFacingRight = false;
+    public bool canDoubleJump = false;
+    public int jumpCount = 0;
 
     void Start()
     {
@@ -34,11 +36,27 @@ public class PlayerMovement : MonoBehaviour
 
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
-        if(Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (isGrounded)
         {
-            Jump();
+            jumpCount = 0;  // Reset the jump count when the player is grounded
         }
 
+        // Handle jump input
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (isGrounded)
+            {
+                // Perform the first (normal) jump
+                Jump();
+                jumpCount = 1;  // Mark that the player has jumped once
+            }
+            else if (canDoubleJump && jumpCount == 1)
+            {
+                // Perform the second (double) jump if the player is in the air and double jump is available
+                Jump();
+                jumpCount = 2;  // Mark that the player has performed both jumps
+            }
+        }
 
         // Flip the player and gun depending on movement direction
         if (horizontalInput > 0 && isFacingRight)
@@ -84,9 +102,8 @@ public class PlayerMovement : MonoBehaviour
     void Flip()
     {
         isFacingRight = !isFacingRight;
-        // Flip the player by changing its scale
         Vector3 playerScale = transform.localScale;
-        playerScale.x *= -1;  // Invert the X scale to flip the player
+        playerScale.x *= -1;
         transform.localScale = playerScale;
 
         // Flip the gunholder along with the player (since the gunholder is a child of the player)
@@ -106,4 +123,8 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void EnableDoubleJump(bool isEnabled)
+    {
+        canDoubleJump = isEnabled;
+    }
 }

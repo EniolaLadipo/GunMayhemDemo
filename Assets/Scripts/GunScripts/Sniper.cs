@@ -8,9 +8,9 @@ public class Sniper : Gun
     {
         gunName = "Sniper";
         magazineCount = 7;
-        knockbackForce = 7.0f;
+        knockbackForce = 5.0f;
         range = 25;
-        bulletSpeed = 20;
+        bulletSpeed = 25;
         fireRate = 1.2f;
     }
 
