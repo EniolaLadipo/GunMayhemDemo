@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class Platform : MonoBehaviour
 {
@@ -14,14 +15,13 @@ public class Platform : MonoBehaviour
 
     void Update()
     {
-        // Check for "down key" input and ensure the player is standing on a platform
         if (Input.GetKeyDown(KeyCode.DownArrow) && currentPlatform != null && !dropping)
         {
             StartCoroutine(DropThroughPlatform());
         }
     }
 
-    private System.Collections.IEnumerator DropThroughPlatform()
+    private IEnumerator DropThroughPlatform()
     {
         dropping = true;
 
@@ -32,7 +32,6 @@ public class Platform : MonoBehaviour
             Physics2D.IgnoreCollision(playerCollider, platformCollider, true);
         }
 
-        // Wait for cooldown before re-enabling collision
         yield return new WaitForSeconds(dropCooldown);
 
         // Re-enable collision

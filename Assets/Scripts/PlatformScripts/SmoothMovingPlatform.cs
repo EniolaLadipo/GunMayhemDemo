@@ -4,11 +4,7 @@ public class SmoothMovingPlatform : MonoBehaviour
 {
     public Transform pointA;   // First point
     public Transform pointB;   // Second point
-<<<<<<< HEAD
     public float speed = 0.5f;   // Speed of the platform
-=======
-    public float speed = 2f;   // Speed of the platform
->>>>>>> main
     private bool isMoving = true;
 
     void Update()
@@ -21,9 +17,8 @@ public class SmoothMovingPlatform : MonoBehaviour
         if (!isMoving) return;
 
         // Smoothly interpolate between pointA and pointB using PingPong
-        float t = Mathf.PingPong(Time.time * speed, 1f); // Time factor for interpolation
+        float t = Mathf.PingPong(Time.time * speed, 1f);
 
-<<<<<<< HEAD
         // Get the current position of the platform and preserve its Z value
         Vector3 currentPosition = transform.position;
 
@@ -33,10 +28,4 @@ public class SmoothMovingPlatform : MonoBehaviour
         // Ensure the Z value stays the same as it was before
         transform.position = new Vector3(transform.position.x, transform.position.y, currentPosition.z);
     }
-=======
-        // Move the platform
-        transform.position = Vector3.Lerp(pointA.position, pointB.position, t);
-    }
-
->>>>>>> main
 }

@@ -7,9 +7,9 @@ public class PlayerMovement : MonoBehaviour
     public float speed;
     public float gravityForce;
     private bool isGrounded;
-    public Transform groundCheck; // Empty GameObject for checking the ground
-    public float groundCheckRadius = 0.15f; // Size of the ground check
-    public LayerMask groundLayer; // Layer representing ground objects
+    public Transform groundCheck;
+    public float groundCheckRadius = 0.15f;
+    public LayerMask groundLayer;
     public Transform gunHolder;
 
     public float defaultGravity;
@@ -102,9 +102,8 @@ public class PlayerMovement : MonoBehaviour
     void Flip()
     {
         isFacingRight = !isFacingRight;
-        // Flip the player by changing its scale
         Vector3 playerScale = transform.localScale;
-        playerScale.x *= -1;  // Invert the X scale to flip the player
+        playerScale.x *= -1;
         transform.localScale = playerScale;
 
         // Flip the gunholder along with the player (since the gunholder is a child of the player)
@@ -124,11 +123,8 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-<<<<<<< HEAD
     public void EnableDoubleJump(bool isEnabled)
     {
         canDoubleJump = isEnabled;
     }
-=======
->>>>>>> main
 }

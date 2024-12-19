@@ -3,10 +3,10 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public float knockbackResistance = 0.1f;
-    public float moveSpeed = 2f;             // Speed at which the enemy follows the player
-    public Transform player;                // Reference to the player's Transform
-    public float followRange = 10f;         // Maximum distance at which the enemy starts following the player
-    public float knockbackRecoveryTime = 1f; // Time before the enemy starts moving again after knockback
+    public float moveSpeed = 2f;
+    public Transform player;
+    public float followRange = 10f;
+    public float knockbackRecoveryTime = 1f;
 
     private Rigidbody2D rb;
     private bool isKnockedBack = false;      // Tracks if the enemy is currently knocked back
@@ -18,7 +18,6 @@ public class Enemy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         rb.freezeRotation = true;
 
-        // Optional: Find the player automatically if not set in the Inspector
         if (player == null)
         {
             GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
@@ -62,7 +61,6 @@ public class Enemy : MonoBehaviour
             return; // No player to follow
         }
 
-        // Calculate distance to the player
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
         // Only follow if within range
@@ -81,7 +79,6 @@ public class Enemy : MonoBehaviour
                 Flip();
             }
 
-            // Move the enemy
             rb.linearVelocity = new Vector2(direction.x * moveSpeed, rb.linearVelocity.y);
         }
         else
@@ -95,7 +92,6 @@ public class Enemy : MonoBehaviour
     {
         isFacingRight = !isFacingRight;
 
-        // Invert the scale of the enemy to flip it
         Vector3 enemyScale = transform.localScale;
         enemyScale.x *= -1;
         transform.localScale = enemyScale;
