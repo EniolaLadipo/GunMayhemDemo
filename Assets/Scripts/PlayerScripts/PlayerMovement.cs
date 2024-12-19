@@ -4,7 +4,7 @@ public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D body;
     public int jumpForce;
-    public int speed;
+    public float speed;
     public float gravityForce;
     private bool isGrounded;
     public Transform groundCheck; // Empty GameObject for checking the ground
@@ -15,6 +15,8 @@ public class PlayerMovement : MonoBehaviour
     public float defaultGravity;
     private float horizontalInput;
     private bool isFacingRight = false;
+    public bool canDoubleJump = false;
+    public int jumpCount = 0;
 
     void Start()
     {
@@ -34,11 +36,27 @@ public class PlayerMovement : MonoBehaviour
 
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
-        if(Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (isGrounded)
         {
-            Jump();
+            jumpCount = 0;  // Reset the jump count when the player is grounded
         }
 
+        // Handle jump input
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (isGrounded)
+            {
+                // Perform the first (normal) jump
+                Jump();
+                jumpCount = 1;  // Mark that the player has jumped once
+            }
+            else if (canDoubleJump && jumpCount == 1)
+            {
+                // Perform the second (double) jump if the player is in the air and double jump is available
+                Jump();
+                jumpCount = 2;  // Mark that the player has performed both jumps
+            }
+        }
 
         // Flip the player and gun depending on movement direction
         if (horizontalInput > 0 && isFacingRight)
@@ -104,5 +122,10 @@ public class PlayerMovement : MonoBehaviour
         {
             Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
         }
+    }
+
+    public void EnableDoubleJump(bool isEnabled)
+    {
+        canDoubleJump = isEnabled;
     }
 }

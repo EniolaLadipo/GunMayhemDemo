@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerRespawn : MonoBehaviour
 {
     public Transform respawnPoint;  // Reference to the respawn point
-    public float fallThreshold = -10f;  // Y position where the player falls off the map
+    public float fallThreshold = -6f;  // Y position where the player falls off the map
 
     void Update()
     {

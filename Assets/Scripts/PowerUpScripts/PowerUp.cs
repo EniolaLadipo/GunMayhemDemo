@@ -1,22 +1,26 @@
-using System.Collections;
 using UnityEngine;
 
 public class PowerUp : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public enum PowerUpType { Speed, Jetpack, DoubleJump }
+    public PowerUpType powerUpType; // Type of this power-up
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        
-    }
+        // Check if the player has collided with the power-up
+        if (other.CompareTag("Player"))
+        {
+            // Get the PlayerInventory component from the player
+            PlayerInventory playerInventory = other.GetComponent<PlayerInventory>();
 
-    public virtual void GeneratePickUp()
-    {
-        
+            if (playerInventory != null)
+            {
+                // Call the method to activate the power-up on the player
+                playerInventory.ActivatePowerUp(this);
+
+                // Destroy the power-up after activation
+                Destroy(gameObject);
+            }
+        }
     }
 }
