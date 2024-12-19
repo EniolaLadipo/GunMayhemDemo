@@ -4,20 +4,21 @@ using System.Collections;
 public class PlayerInventory : MonoBehaviour
 {
     public int gunCount = 0;
-    public Transform gunHolder; // Reference to the GunHolder object
-    private GameObject currentGun; // The currently equipped gun
+    public Transform gunHolder;         // Reference to the GunHolder object
+    private GameObject currentGun;      // The currently equipped gun
 
     public float lastTimeShot = 0f;
 
     // Player-related fields
-    public float speed = 3f;          // Default speed (slower)
-    public float jumpForce = 5f;      // Default jump force (reduced for normal jumps)
+    public float speed = 3f;            // Default speed
+    public float jumpForce = 6f;        // Default jump force
     public bool canDoubleJump = false; // Double jump enabled
-    private int doubleJumpCount = 0; // Counter for double jumps
+    public int doubleJumpCount = 0;     // Counter for double jumps
     public bool isJetpackActive = false; // Jetpack state
-    public float jetpackForce = 10f;  // Force applied during jetpack use
+    public float jetpackForce = 5f;    // Reduced force for jetpack (default adjusted)
+    public float jetpackSpeed = 2f;    // Speed at which the jetpack is activated
 
-    private Rigidbody2D rb; // Reference to Rigidbody2D
+    private Rigidbody2D rb;            // Reference to Rigidbody2D
 
     // Power-up related fields
     private float originalGravityScale; // To store the original gravity scale for restoring later
@@ -25,7 +26,7 @@ public class PlayerInventory : MonoBehaviour
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>(); // Get the Rigidbody2D for movement
+        rb = GetComponent<Rigidbody2D>();
         originalGravityScale = rb.gravityScale; // Save the original gravity scale
     }
 
@@ -39,24 +40,10 @@ public class PlayerInventory : MonoBehaviour
             FireWeapon();
         }
 
-        // Jetpack logic: If jetpack is active and spacebar is held down, keep applying upward force
+        // Jetpack logic
         if (isJetpackActive && Input.GetKey(KeyCode.Space))
         {
             ActivateJetpack();
-        }
-
-        // Double jump logic
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (isGrounded())
-            {
-                doubleJumpCount = 0; // Reset double jump when touching the ground
-            }
-            else if (canDoubleJump && doubleJumpCount < 1) // Allow one extra double jump
-            {
-                doubleJumpCount++;
-                Jump(jumpForce); // Perform a double jump
-            }
         }
     }
 
@@ -78,7 +65,6 @@ public class PlayerInventory : MonoBehaviour
     {
         if (currentGun != null)
         {
-            // Check player movement direction and flip the gun accordingly
             if (transform.localScale.x > 0)
             {
                 currentGun.transform.localRotation = Quaternion.Euler(0, 0, 0); // Facing right
@@ -102,42 +88,36 @@ public class PlayerInventory : MonoBehaviour
 
                 if (currentTime - lastTimeShot >= equippedGun.fireRate)
                 {
-                    Vector2 direction = (transform.localScale.x > 0) ? Vector2.right : Vector2.left; // Player facing right or left
+                    Vector2 direction = (transform.localScale.x > 0) ? Vector2.right : Vector2.left;
                     equippedGun.Shoot(direction);
 
                     lastTimeShot = currentTime;
-
-                    // Trigger recoil after firing
                     Recoil();
                 }
             }
         }
     }
 
-    // Recoil effect when the player shoots the gun
     public void Recoil()
     {
-        // Apply recoil effect to the player when shooting
         Vector2 recoilDirection = transform.localScale.x > 0 ? Vector2.left : Vector2.right;
-        rb.AddForce(recoilDirection * 2f, ForceMode2D.Impulse); // Recoil force is small
+        rb.AddForce(recoilDirection * 2f, ForceMode2D.Impulse);
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // Check if the player collides with a power-up or rifle
         if (other.CompareTag("powerup"))
         {
             PowerUpBehavior powerUp = other.GetComponent<PowerUpBehavior>();
 
             if (powerUp != null)
             {
-                // If there's already an active power-up, stop it first
+                // If there is already an active power-up, stop the current coroutine (i.e., cancel the current power-up)
                 if (currentPowerUpCoroutine != null)
                 {
                     StopCoroutine(currentPowerUpCoroutine);
                 }
 
-                // Apply the new power-up
                 switch (powerUp.powerUpType)
                 {
                     case PowerUpBehavior.PowerUpType.Speed:
@@ -149,67 +129,49 @@ public class PlayerInventory : MonoBehaviour
                         break;
 
                     case PowerUpBehavior.PowerUpType.Jetpack:
-                        currentPowerUpCoroutine = StartCoroutine(JetpackBoost()); // Activate jetpack power-up
+                        currentPowerUpCoroutine = StartCoroutine(JetpackBoost());
                         break;
                 }
 
-                Destroy(other.gameObject); // Remove the power-up from the scene
+                // Destroy the power-up object and pick it up
+                Destroy(other.gameObject);
             }
-        }
-        // Check if the player collides with a rifle and picks it up
-        if (other.CompareTag("Gun"))
-        {
-            // Equip the rifle and destroy the rifle object
-            equipGun(other.gameObject); // Equip the rifle
-            Destroy(other.gameObject);  // Remove the rifle from the scene
         }
     }
 
     private IEnumerator SpeedBoost()
     {
         float originalSpeed = speed;
-        speed = 6f; // Increase speed with the power-up
-        yield return new WaitForSeconds(15f); // Lasts for 15 seconds
-        speed = originalSpeed; // Reset to original speed
+        speed = 15f;
+        yield return new WaitForSeconds(6f);
+        speed = originalSpeed;
     }
 
     private IEnumerator DoubleJumpBoost()
     {
-        canDoubleJump = true; // Enable double jump
-        yield return new WaitForSeconds(15f); // Lasts for 15 seconds
-        canDoubleJump = false; // Disable double jump
+        canDoubleJump = true;
+        yield return new WaitForSeconds(8f);
+        canDoubleJump = false;
     }
 
     private IEnumerator JetpackBoost()
     {
-        isJetpackActive = true; // Enable jetpack
-        rb.gravityScale = originalGravityScale * 0.5f; // Reduce gravity to make jetpack more effective
-        yield return new WaitForSeconds(15f); // Lasts for 15 seconds
-        isJetpackActive = false; // Disable jetpack
-        rb.gravityScale = originalGravityScale; // Reset gravity back to original
+        isJetpackActive = true;
+        rb.gravityScale = originalGravityScale * 0.5f;
+
+        // After 15 seconds, the jetpack effect should expire
+        yield return new WaitForSeconds(6f);
+
+        // Deactivate the jetpack and reset gravity
+        isJetpackActive = false;
+        rb.gravityScale = originalGravityScale;
     }
 
-    // Function to activate the jetpack while pressing space
     public void ActivateJetpack()
     {
         if (isJetpackActive)
         {
-            // Apply an upward force while the space key is held down
-            rb.AddForce(Vector2.up * jetpackForce, ForceMode2D.Force);
+            rb.AddForce(Vector2.up * jetpackForce * jetpackSpeed, ForceMode2D.Force); // Apply jetpack force
         }
-    }
-
-    // Helper function to check if the player is grounded
-    private bool isGrounded()
-    {
-        // Check if the player is on the ground (adjust this logic based on your game)
-        return Physics2D.OverlapCircle(transform.position, 0.1f, LayerMask.GetMask("Ground")) != null;
-    }
-
-    // Function to handle normal jumping
-    private void Jump(float force)
-    {
-        rb.velocity = new Vector2(rb.velocity.x, 0); // Reset vertical velocity before jumping
-        rb.AddForce(Vector2.up * force, ForceMode2D.Impulse); // Apply the jump force
     }
 }
