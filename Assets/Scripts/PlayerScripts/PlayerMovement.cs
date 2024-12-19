@@ -124,8 +124,11 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+<<<<<<< HEAD
     public void EnableDoubleJump(bool isEnabled)
     {
         canDoubleJump = isEnabled;
     }
+=======
+>>>>>>> main
 }

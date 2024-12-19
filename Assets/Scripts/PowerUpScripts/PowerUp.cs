@@ -1,7 +1,8 @@
 using UnityEngine;
 
-public class PowerUp : MonoBehaviour
+public class PowerUp : MonoBehaviour 
 {
+<<<<<<< HEAD
     public enum PowerUpType { Speed, Jetpack, DoubleJump }
     public PowerUpType powerUpType; // Type of this power-up
 
@@ -22,5 +23,15 @@ public class PowerUp : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+=======
+    void Start()
+    {
+
+    }
+
+    void Update()
+    {
+
+>>>>>>> main
     }
 }

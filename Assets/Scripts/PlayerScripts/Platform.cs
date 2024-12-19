@@ -15,7 +15,7 @@ public class Platform : MonoBehaviour
     void Update()
     {
         // Check for "down key" input and ensure the player is standing on a platform
-        if ((Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S)) && currentPlatform != null && !dropping)
+        if (Input.GetKeyDown(KeyCode.DownArrow) && currentPlatform != null && !dropping)
         {
             StartCoroutine(DropThroughPlatform());
         }
@@ -27,13 +27,20 @@ public class Platform : MonoBehaviour
 
         // Temporarily disable collision between player and current platform
         Collider2D platformCollider = currentPlatform.GetComponent<Collider2D>();
-        Physics2D.IgnoreCollision(playerCollider, platformCollider, true);
+        if (platformCollider != null)
+        {
+            Physics2D.IgnoreCollision(playerCollider, platformCollider, true);
+        }
 
         // Wait for cooldown before re-enabling collision
         yield return new WaitForSeconds(dropCooldown);
 
         // Re-enable collision
-        Physics2D.IgnoreCollision(playerCollider, platformCollider, false);
+        if (platformCollider != null)
+        {
+            Physics2D.IgnoreCollision(playerCollider, platformCollider, false);
+        }
+
         dropping = false;
     }
 
@@ -42,6 +49,7 @@ public class Platform : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Platform"))
         {
+            // If the player is on top of the platform, record it
             currentPlatform = collision.gameObject;
         }
     }
@@ -50,6 +58,7 @@ public class Platform : MonoBehaviour
     {
         if (collision.gameObject == currentPlatform)
         {
+            // Reset the current platform when leaving it
             currentPlatform = null;
         }
     }
