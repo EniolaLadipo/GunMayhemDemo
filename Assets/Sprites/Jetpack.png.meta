@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 4114e1d78e7962443b0f9b62b2244c4a
+guid: 2c79fb82f183ea04d8ac9d8dd8690440
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6365101904895066116
-    second: shotgunblast2_0
+      213: -7412931306755752950
+    second: Jetpack_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -165,13 +165,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: shotgunblast2_0
+      name: Jetpack_0
       rect:
         serializedVersion: 2
-        x: 59
-        y: 80
-        width: 241
-        height: 101
+        x: 0
+        y: 0
+        width: 360
+        height: 360
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -180,8 +180,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cff319f8a8d9aa7a0800000000000000
-      internalID: -6365101904895066116
+      spriteID: a0c737c704aff1990800000000000000
+      internalID: -7412931306755752950
       vertices: []
       indices: 
       edges: []
@@ -199,8 +199,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      shotgunblast2_0: -6365101904895066116
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
